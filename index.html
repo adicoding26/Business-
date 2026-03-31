@@ -1,1176 +1,1164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Madhav Food Mall – Real Food, Real Vibe</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Baloo+2:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProblemMine — Real Problems. Real Startups.</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
-    --yell: #D4A017;
-    --deep-yell: #B8860B;
-    --red: #C0392B;
-    --dark-red: #922B21;
-    --bg: #1A1208;
-    --bg2: #0F0A04;
-    --surface: #231A0A;
-    --surface2: #2E1F0D;
-    --text: #F5E6C8;
-    --muted: #A89070;
-    --accent: #FF6B35;
-    --white: #FFF8EE;
+    --bg: #0a0a08;
+    --surface: #111110;
+    --surface2: #1a1a18;
+    --border: #2a2a26;
+    --accent: #e8f55a;
+    --accent2: #ff6b35;
+    --accent3: #4ecdc4;
+    --text: #f0ede6;
+    --muted: #888880;
+    --tag-bg: #1e1e1c;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'DM Mono', monospace;
     overflow-x: hidden;
+    cursor: crosshair;
   }
 
-  /* ── NOISE TEXTURE OVERLAY ── */
+  /* NOISE OVERLAY */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
+    z-index: 1000;
+    opacity: 0.5;
   }
 
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(15,10,4,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(212,160,23,0.2);
+  /* HEADER */
+  header {
+    padding: 24px 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 5vw;
-    height: 70px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,8,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
   }
 
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    letter-spacing: 2px;
-    color: var(--yell);
-    text-decoration: none;
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.5px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
 
-  .nav-logo span { color: var(--red); }
+  .logo-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
 
-  .nav-links {
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.7; }
+  }
+
+  .header-right {
     display: flex;
-    gap: 2rem;
-    list-style: none;
+    align-items: center;
+    gap: 32px;
   }
 
-  .nav-links a {
+  .stat-pill {
+    font-size: 11px;
     color: var(--muted);
-    text-decoration: none;
-    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .stat-pill span {
+    color: var(--accent);
     font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: color 0.2s;
   }
 
-  .nav-links a:hover { color: var(--yell); }
-
-  .nav-cta {
-    background: var(--red);
-    color: var(--white) !important;
-    padding: 8px 20px;
-    border-radius: 4px;
-    font-weight: 700 !important;
-    transition: background 0.2s !important;
-  }
-
-  .nav-cta:hover { background: var(--dark-red) !important; color: var(--white) !important; }
-
-  /* ── HERO ── */
-  #home {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 100px 5vw 60px;
+  /* HERO */
+  .hero {
+    padding: 100px 48px 80px;
     position: relative;
     overflow: hidden;
   }
 
-  .hero-bg {
+  .hero-bg-grid {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(ellipse 60% 60% at 80% 50%, rgba(192,57,43,0.15) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 70% at 20% 60%, rgba(212,160,23,0.1) 0%, transparent 60%),
-      linear-gradient(160deg, #1A1208 60%, #0F0804 100%);
-    z-index: 0;
+    background-image: 
+      linear-gradient(rgba(232,245,90,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,245,90,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
   }
 
-  /* decorative spice circles */
-  .spice-circle {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(212,160,23,0.1);
-    animation: rotate-slow 30s linear infinite;
-  }
-
-  .spice-circle:nth-child(1) { width: 600px; height: 600px; top: -150px; right: -100px; }
-  .spice-circle:nth-child(2) { width: 400px; height: 400px; top: -50px; right: 50px; animation-direction: reverse; }
-  .spice-circle:nth-child(3) { width: 200px; height: 200px; top: 50px; right: 200px; }
-
-  @keyframes rotate-slow { to { transform: rotate(360deg); } }
-
-  .hero-content { position: relative; z-index: 1; max-width: 820px; }
-
-  .hero-badge {
-    display: inline-block;
-    background: rgba(212,160,23,0.12);
-    border: 1px solid rgba(212,160,23,0.4);
-    color: var(--yell);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 3px;
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 2px;
-    margin-bottom: 24px;
+    color: var(--accent);
+    border: 1px solid rgba(232,245,90,0.3);
+    padding: 6px 14px;
+    margin-bottom: 40px;
     animation: fadeUp 0.6s ease both;
   }
 
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.5rem, 10vw, 8rem);
-    line-height: 0.92;
-    letter-spacing: 2px;
-    animation: fadeUp 0.7s 0.1s ease both;
-  }
-
-  .hero-title .line-red { color: var(--red); }
-  .hero-title .line-yell { color: var(--yell); }
-
-  .hero-sub {
-    margin-top: 24px;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    font-family: 'Baloo 2', sans-serif;
-    font-weight: 400;
-    color: var(--muted);
-    max-width: 580px;
-    line-height: 1.6;
-    animation: fadeUp 0.7s 0.2s ease both;
-  }
-
-  .hero-sub strong { color: var(--yell); }
-
-  .hero-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 40px;
-    flex-wrap: wrap;
-    animation: fadeUp 0.7s 0.3s ease both;
-  }
-
-  .btn-primary {
-    background: var(--red);
-    color: var(--white);
-    font-family: 'Baloo 2', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 14px 32px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: transform 0.2s, background 0.2s;
-    letter-spacing: 0.5px;
-  }
-
-  .btn-primary:hover { background: var(--dark-red); transform: translateY(-2px); }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--yell);
-    font-family: 'Baloo 2', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 14px 32px;
-    border: 1.5px solid var(--yell);
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: transform 0.2s, background 0.2s;
-  }
-
-  .btn-outline:hover { background: rgba(212,160,23,0.1); transform: translateY(-2px); }
-
-  /* stats strip */
-  .hero-stats {
-    display: flex;
-    gap: 40px;
-    margin-top: 60px;
-    border-top: 1px solid rgba(212,160,23,0.15);
-    padding-top: 40px;
-    flex-wrap: wrap;
-    animation: fadeUp 0.7s 0.4s ease both;
-  }
-
-  .stat-item { }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.8rem;
-    color: var(--yell);
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── SECTIONS COMMON ── */
-  section { padding: 100px 5vw; }
-
-  .section-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--yell);
-    margin-bottom: 12px;
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    max-width: 900px;
+    animation: fadeUp 0.7s ease 0.1s both;
   }
 
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    line-height: 1;
-    margin-bottom: 20px;
+  .hero h1 em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: -1px;
   }
 
-  .section-title .red { color: var(--red); }
-
-  .section-desc {
-    font-size: 1.05rem;
-    color: var(--muted);
-    max-width: 600px;
+  .hero-sub {
+    margin-top: 40px;
+    max-width: 560px;
+    font-size: 15px;
     line-height: 1.7;
-    font-family: 'Baloo 2', sans-serif;
-  }
-
-  /* ── ABOUT ── */
-  #about {
-    background: var(--surface);
-    border-top: 1px solid rgba(212,160,23,0.1);
-    border-bottom: 1px solid rgba(212,160,23,0.1);
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-    margin-top: 50px;
-  }
-
-  .about-img-wrap {
-    position: relative;
-  }
-
-  .about-img-box {
-    background: linear-gradient(135deg, var(--red) 0%, var(--dark-red) 50%, var(--deep-yell) 100%);
-    border-radius: 8px;
-    aspect-ratio: 4/3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 8rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .about-img-box::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(0,0,0,0.05) 10px,
-      rgba(0,0,0,0.05) 20px
-    );
-  }
-
-  .about-float-card {
-    position: absolute;
-    bottom: -20px; right: -20px;
-    background: var(--surface2);
-    border: 1px solid rgba(212,160,23,0.3);
-    border-radius: 8px;
-    padding: 20px 24px;
-    text-align: center;
-  }
-
-  .about-float-card .num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem;
-    color: var(--yell);
-  }
-
-  .about-float-card .lbl {
-    font-size: 0.75rem;
     color: var(--muted);
-    letter-spacing: 1px;
+    animation: fadeUp 0.7s ease 0.2s both;
   }
 
-  .about-pills {
+  .hero-cta {
+    margin-top: 48px;
+    display: flex;
+    gap: 16px;
+    animation: fadeUp 0.7s ease 0.3s both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a08;
+    border: none;
+    padding: 14px 28px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #f0ff70;
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 14px 28px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* FILTERS */
+  .filters-section {
+    padding: 40px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .filters-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .filter-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 30px;
   }
 
-  .pill {
-    background: rgba(212,160,23,0.1);
-    border: 1px solid rgba(212,160,23,0.25);
-    color: var(--yell);
-    padding: 6px 16px;
-    border-radius: 100px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+  .filter-tag {
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
   }
 
-  /* ── MENU VIBES ── */
-  #menu {
-    position: relative;
+  .filter-tag:hover, .filter-tag.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(232,245,90,0.05);
   }
 
-  .menu-grid {
+  /* PROBLEMS GRID */
+  .problems-section {
+    padding: 60px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .problem-count {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .problem-count span { color: var(--text); }
+
+  .problems-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-    margin-top: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 2px;
   }
 
-  .menu-card {
+  .problem-card {
     background: var(--surface);
-    border: 1px solid rgba(212,160,23,0.1);
-    border-radius: 8px;
-    padding: 30px 24px;
-    transition: transform 0.3s, border-color 0.3s;
+    border: 1px solid var(--border);
+    padding: 36px;
+    cursor: pointer;
+    transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
+    animation: fadeUp 0.5s ease both;
   }
 
-  .menu-card::before {
+  .problem-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--red), var(--yell));
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.3s;
+    transition: transform 0.3s ease;
   }
 
-  .menu-card:hover { transform: translateY(-6px); border-color: rgba(212,160,23,0.35); }
-  .menu-card:hover::before { transform: scaleX(1); }
-
-  .menu-icon { font-size: 2.5rem; margin-bottom: 16px; }
-
-  .menu-card h3 {
-    font-family: 'Baloo 2', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: var(--white);
-    margin-bottom: 8px;
+  .problem-card:hover {
+    background: var(--surface2);
+    border-color: rgba(232,245,90,0.2);
+    transform: translateY(-3px);
   }
 
-  .menu-card p {
-    font-size: 0.88rem;
+  .problem-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .card-number {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .severity-badge {
+    font-size: 10px;
+    padding: 4px 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .severity-critical { background: rgba(255,107,53,0.15); color: #ff6b35; border: 1px solid rgba(255,107,53,0.3); }
+  .severity-high { background: rgba(232,245,90,0.1); color: var(--accent); border: 1px solid rgba(232,245,90,0.25); }
+  .severity-medium { background: rgba(78,205,196,0.1); color: var(--accent3); border: 1px solid rgba(78,205,196,0.25); }
+
+  .card-category {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #aaa89e;
+    margin-bottom: 24px;
+  }
+
+  .card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 4px 10px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .revenue-tag {
+    margin-left: auto;
+    font-size: 11px;
+    color: #4ecdc4;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  /* FEATURED CARD */
+  .problem-card.featured {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #111110 0%, #161614 100%);
+    border-color: rgba(232,245,90,0.2);
+  }
+
+  .problem-card.featured .card-title {
+    font-size: 28px;
+  }
+
+  .featured-insight {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(232,245,90,0.05);
+    border-left: 3px solid var(--accent);
+  }
+
+  .featured-insight p {
+    font-size: 12px;
     color: var(--muted);
     line-height: 1.6;
   }
 
-  .menu-tag {
-    display: inline-block;
-    margin-top: 16px;
-    background: rgba(192,57,43,0.15);
-    border: 1px solid rgba(192,57,43,0.3);
+  .featured-insight strong {
     color: var(--accent);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 2px;
+    font-weight: 500;
   }
 
-  /* ── FRANCHISE ── */
-  #franchise {
-    background: var(--surface);
-    border-top: 1px solid rgba(212,160,23,0.1);
-  }
-
-  .franchise-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
-
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-top: 50px;
-  }
-
-  .price-card {
-    background: var(--bg2);
-    border: 1px solid rgba(212,160,23,0.12);
-    border-radius: 10px;
-    padding: 36px 28px;
-    position: relative;
-    transition: transform 0.3s, border-color 0.3s;
-  }
-
-  .price-card:hover { transform: translateY(-4px); border-color: rgba(212,160,23,0.4); }
-
-  .price-card.popular {
-    border-color: var(--yell);
-    background: linear-gradient(160deg, #231A0A, #1A1208);
-  }
-
-  .popular-badge {
-    position: absolute;
-    top: -13px; left: 50%; transform: translateX(-50%);
-    background: var(--red);
-    color: var(--white);
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 4px 16px;
-    border-radius: 100px;
-  }
-
-  .price-plan {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 1px;
-    color: var(--yell);
-  }
-
-  .price-emoji { font-size: 2rem; margin-bottom: 12px; display: block; }
-
-  .price-amount {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.2rem;
-    color: var(--white);
-    line-height: 1;
-    margin: 12px 0 4px;
-  }
-
-  .price-amount span { font-size: 1.2rem; color: var(--muted); }
-
-  .price-note { font-size: 0.78rem; color: var(--muted); margin-bottom: 24px; }
-
-  .price-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 28px;
-  }
-
-  .price-features li {
-    font-size: 0.88rem;
-    color: var(--text);
-    display: flex;
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 500;
+    display: none;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    padding: 40px;
   }
 
-  .price-features li::before {
-    content: '✓';
-    color: var(--yell);
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  /* requirements */
-  .req-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 50px;
-  }
-
-  .req-card {
-    background: var(--bg2);
-    border-left: 3px solid var(--red);
-    padding: 22px 20px;
-    border-radius: 0 8px 8px 0;
-  }
-
-  .req-card h4 {
-    font-family: 'Baloo 2', sans-serif;
-    font-weight: 800;
-    font-size: 1rem;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-
-  .req-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
-
-  /* ── CONTACT ── */
-  #contact { background: var(--bg2); border-top: 1px solid rgba(212,160,23,0.1); }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    margin-top: 50px;
-    align-items: start;
-  }
-
-  .contact-info-item {
+  .modal-overlay.open {
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 28px;
+    animation: fadeIn 0.2s ease;
   }
 
-  .contact-icon {
-    width: 46px; height: 46px;
-    background: rgba(212,160,23,0.1);
-    border: 1px solid rgba(212,160,23,0.25);
-    border-radius: 8px;
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    max-width: 680px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-header {
+    padding: 32px 36px 0;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .modal-close {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    transition: all 0.2s;
     flex-shrink: 0;
   }
 
-  .contact-info-item h4 {
-    font-family: 'Baloo 2', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--yell);
-    margin-bottom: 4px;
+  .modal-close:hover {
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
-  .contact-info-item p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
-
-  .contact-form { display: flex; flex-direction: column; gap: 16px; }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-
-  .form-group label {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--muted);
+  .modal-body {
+    padding: 32px 36px;
   }
 
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    background: var(--surface);
-    border: 1px solid rgba(212,160,23,0.15);
-    border-radius: 6px;
-    padding: 12px 16px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.92rem;
-    outline: none;
-    transition: border-color 0.2s;
-    width: 100%;
-  }
-
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--yell);
-  }
-
-  .form-group select option { background: var(--surface); }
-
-  .form-group textarea { resize: vertical; min-height: 120px; }
-
-  .form-submit {
-    background: linear-gradient(135deg, var(--red), var(--dark-red));
-    color: var(--white);
-    font-family: 'Baloo 2', sans-serif;
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
     font-weight: 800;
-    font-size: 1rem;
-    padding: 15px 32px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: transform 0.2s, opacity 0.2s;
-    margin-top: 8px;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 6px;
   }
 
-  .form-submit:hover { transform: translateY(-2px); opacity: 0.9; }
-
-  .success-msg {
-    display: none;
-    background: rgba(212,160,23,0.12);
-    border: 1px solid var(--yell);
-    color: var(--yell);
-    border-radius: 6px;
-    padding: 14px 20px;
-    font-family: 'Baloo 2', sans-serif;
-    font-weight: 600;
-    font-size: 0.92rem;
-    margin-top: 8px;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--bg2);
-    border-top: 1px solid rgba(212,160,23,0.15);
-    padding: 50px 5vw 30px;
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 40px;
-  }
-
-  .footer-brand .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    color: var(--yell);
-    letter-spacing: 2px;
-    display: block;
-    margin-bottom: 12px;
-  }
-
-  .footer-brand .logo span { color: var(--red); }
-
-  .footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; max-width: 300px; }
-
-  .footer-col h4 {
-    font-family: 'Baloo 2', sans-serif;
-    font-weight: 700;
-    color: var(--yell);
-    font-size: 0.85rem;
-    letter-spacing: 1px;
+  .modal-cat {
+    font-size: 11px;
     text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-
-  .footer-col ul a {
+    letter-spacing: 0.1em;
     color: var(--muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    transition: color 0.2s;
   }
 
-  .footer-col ul a:hover { color: var(--yell); }
+  .modal-section {
+    margin-bottom: 28px;
+  }
 
-  .footer-bottom {
-    border-top: 1px solid rgba(212,160,23,0.1);
-    padding-top: 24px;
+  .modal-section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .modal-section p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #bbb8b0;
+  }
+
+  .startup-ideas {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 12px;
   }
 
-  .footer-bottom p { font-size: 0.8rem; color: var(--muted); }
-
-  /* ── SCROLL REVEAL ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+  .startup-idea {
+    padding: 16px 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
   }
 
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .startup-idea h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
   }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .about-grid, .contact-grid { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    .hero-stats { gap: 24px; }
-    .about-float-card { display: none; }
-    .franchise-header { flex-direction: column; }
+  .startup-idea p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
   }
 
-  /* ticker */
-  .ticker-wrap {
-    background: var(--red);
-    overflow: hidden;
-    padding: 10px 0;
-    border-top: 1px solid var(--dark-red);
-    border-bottom: 1px solid var(--dark-red);
+  .startup-idea.alt { border-left-color: var(--accent2); }
+  .startup-idea.alt2 { border-left-color: var(--accent3); }
+
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
 
-  .ticker-track {
-    display: flex;
-    gap: 0;
-    animation: ticker 20s linear infinite;
-    white-space: nowrap;
+  .metric-box {
+    padding: 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    text-align: center;
   }
 
-  .ticker-item {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    color: var(--white);
-    padding: 0 30px;
+  .metric-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .metric-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 80px;
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
   }
 
-  .ticker-dot { color: var(--yell); }
+  footer p {
+    font-size: 12px;
+    color: var(--muted);
+  }
 
-  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  footer span {
+    color: var(--accent);
+  }
 
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+
+  /* HIDDEN CARDS (for filter) */
+  .problem-card.hidden { display: none; }
+
+  @media (max-width: 768px) {
+    header { padding: 16px 24px; }
+    .hero { padding: 60px 24px 48px; }
+    .filters-section, .problems-section { padding: 32px 24px; }
+    .problems-grid { grid-template-columns: 1fr; }
+    .problem-card.featured { grid-column: span 1; }
+    .metrics-row { grid-template-columns: repeat(3, 1fr); }
+    footer { flex-direction: column; gap: 16px; padding: 32px 24px; }
+    .modal { margin: 0; }
+    .hero-cta { flex-direction: column; }
+    .btn-primary, .btn-ghost { text-align: center; }
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#home" class="nav-logo">MADHAV <span>FOOD</span> MALL</a>
-  <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#menu">Menu</a></li>
-    <li><a href="#franchise">Franchise</a></li>
-    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section id="home">
-  <div class="hero-bg">
-    <div class="spice-circle"></div>
-    <div class="spice-circle"></div>
-    <div class="spice-circle"></div>
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    ProblemMine
   </div>
-  <div class="hero-content">
-    <div class="hero-badge">🍵 Gujarat ka Apna Brand · Est. 2024</div>
-    <h1 class="hero-title">
-      <div class="line-yell">REAL FOOD.</div>
-      <div class="line-red">REAL VIBE.</div>
-      <div>REAL MADHAV.</div>
-    </h1>
-    <p class="hero-sub">
-      Desi flavours, global hustle. From <strong>kadak chai</strong> to full-on
-      <strong>Kathiyawadi thali</strong> — we serve what hits different.
-      Kha bhi lo, franchise bhi lo. 🔥
-    </p>
-    <div class="hero-actions">
-      <a href="#franchise" class="btn-primary">🚀 Start Franchise</a>
-      <a href="#menu" class="btn-outline">Dekh Menu →</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num">50+</div>
-        <div class="stat-label">Franchise Spots</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">3</div>
-        <div class="stat-label">Cart Options</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">100%</div>
-        <div class="stat-label">Desi Vibes</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">∞</div>
-        <div class="stat-label">Chai Goals</div>
-      </div>
-    </div>
+  <div class="header-right">
+    <div class="stat-pill"><span>47</span> Problems Catalogued</div>
+    <div class="stat-pill"><span>$2.1T</span> Combined Market</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-label">⚡ Startup Intelligence</div>
+  <h1>The world is<br><em>broken.</em><br>Build the fix.</h1>
+  <p class="hero-sub">Every unsolved problem is a startup waiting to be born. We catalogue real-world friction — pain points, inefficiencies, broken systems — and map them to revenue-generating business opportunities.</p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="document.querySelector('.problems-section').scrollIntoView({behavior:'smooth'})">Explore Problems →</button>
+    <button class="btn-ghost">Submit a Problem</button>
   </div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-track">
-    <span class="ticker-item">☕ KADAK CHAI <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">🍛 KATHIYAWADI KHANA <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">🌶️ PUNJABI TADKA <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">🥤 THANDA MASALA SODA <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">🏪 FRANCHISE AVAILABLE <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">💛 GUJARAT NO GARV <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">☕ KADAK CHAI <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">🍛 KATHIYAWADI KHANA <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">🌶️ PUNJABI TADKA <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">🥤 THANDA MASALA SODA <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">🏪 FRANCHISE AVAILABLE <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">💛 GUJARAT NO GARV <span class="ticker-dot">✦</span></span>
+<section class="filters-section">
+  <div class="filters-label">// Filter by domain</div>
+  <div class="filter-tags">
+    <button class="filter-tag active" onclick="filterCards('all', this)">All Problems</button>
+    <button class="filter-tag" onclick="filterCards('healthcare', this)">Healthcare</button>
+    <button class="filter-tag" onclick="filterCards('climate', this)">Climate</button>
+    <button class="filter-tag" onclick="filterCards('fintech', this)">Fintech</button>
+    <button class="filter-tag" onclick="filterCards('education', this)">Education</button>
+    <button class="filter-tag" onclick="filterCards('agriculture', this)">Agriculture</button>
+    <button class="filter-tag" onclick="filterCards('logistics', this)">Logistics</button>
+    <button class="filter-tag" onclick="filterCards('mental-health', this)">Mental Health</button>
+    <button class="filter-tag" onclick="filterCards('housing', this)">Housing</button>
+    <button class="filter-tag" onclick="filterCards('hr', this)">HR & Work</button>
+    <button class="filter-tag" onclick="filterCards('food', this)">Food</button>
+  </div>
+</section>
+
+<section class="problems-section">
+  <div class="section-header">
+    <div class="section-title">// Catalogued Problems</div>
+    <div class="problem-count">Showing <span id="visible-count">12</span> of 47</div>
+  </div>
+
+  <div class="problems-grid" id="problems-grid">
+
+    <!-- FEATURED -->
+    <div class="problem-card featured" data-category="healthcare" style="animation-delay:0s" onclick="openModal('p1')">
+      <div class="card-top">
+        <span class="card-number">001 — FEATURED</span>
+        <span class="severity-badge severity-critical">Critical</span>
+      </div>
+      <div class="card-category">Healthcare / Diagnostics</div>
+      <div class="card-title">Delayed Medical Diagnosis in Tier-2 & Rural Areas</div>
+      <div class="card-desc">Over 600 million people in India lack access to specialist doctors. Patients wait weeks or months for diagnoses that could be delivered in hours with the right infrastructure. Misdiagnosis rates exceed 40% in understaffed clinics.</div>
+      <div class="featured-insight">
+        <p><strong>Opportunity signal:</strong> AI-assisted diagnostics + telemedicine + affordable lab networks. Companies like Niramai and Healthians have proven partial models. The gap in last-mile delivery remains wide open.</p>
+      </div>
+      <div class="card-footer" style="margin-top:20px">
+        <span class="tag">AI / ML</span>
+        <span class="tag">Telemedicine</span>
+        <span class="tag">B2C + B2B2C</span>
+        <span class="revenue-tag">$45B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="mental-health" style="animation-delay:0.05s" onclick="openModal('p2')">
+      <div class="card-top">
+        <span class="card-number">002</span>
+        <span class="severity-badge severity-critical">Critical</span>
+      </div>
+      <div class="card-category">Mental Health</div>
+      <div class="card-title">Therapist Shortage & Unaffordable Mental Care</div>
+      <div class="card-desc">1 in 5 adults experiences mental illness annually. There are only 0.07 psychiatrists per 10,000 people in developing countries. Most can't afford private therapy ($80–200/hr).</div>
+      <div class="card-footer">
+        <span class="tag">SaaS</span>
+        <span class="tag">B2C</span>
+        <span class="revenue-tag">$12B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="climate" style="animation-delay:0.1s" onclick="openModal('p3')">
+      <div class="card-top">
+        <span class="card-number">003</span>
+        <span class="severity-badge severity-critical">Critical</span>
+      </div>
+      <div class="card-category">Climate / Energy</div>
+      <div class="card-title">SMEs Can't Afford the Green Transition</div>
+      <div class="card-desc">Small businesses emit 70% of industrial carbon but lack capital and knowledge to adopt renewables. Sustainability consultants are expensive and solar payback periods feel too long.</div>
+      <div class="card-footer">
+        <span class="tag">Fintech</span>
+        <span class="tag">CleanTech</span>
+        <span class="revenue-tag">$28B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="education" style="animation-delay:0.15s" onclick="openModal('p4')">
+      <div class="card-top">
+        <span class="card-number">004</span>
+        <span class="severity-badge severity-high">High</span>
+      </div>
+      <div class="card-category">Education / Skills</div>
+      <div class="card-title">The Skills-to-Jobs Mismatch Crisis</div>
+      <div class="card-desc">85 million jobs will go unfilled by 2025 due to skills gaps, while 375 million workers need to switch occupational categories. Degrees no longer signal job-readiness.</div>
+      <div class="card-footer">
+        <span class="tag">EdTech</span>
+        <span class="tag">B2B + B2C</span>
+        <span class="revenue-tag">$60B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="fintech" style="animation-delay:0.2s" onclick="openModal('p5')">
+      <div class="card-top">
+        <span class="card-number">005</span>
+        <span class="severity-badge severity-high">High</span>
+      </div>
+      <div class="card-category">Fintech / Credit</div>
+      <div class="card-title">1.4B Adults Are Completely Unbanked</div>
+      <div class="card-desc">No credit score, no collateral, no access. Informal workers, migrants, and rural populations are invisible to formal financial systems — trapped in predatory lending cycles.</div>
+      <div class="card-footer">
+        <span class="tag">DeFi</span>
+        <span class="tag">Mobile-first</span>
+        <span class="revenue-tag">$380B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="agriculture" style="animation-delay:0.25s" onclick="openModal('p6')">
+      <div class="card-top">
+        <span class="card-number">006</span>
+        <span class="severity-badge severity-critical">Critical</span>
+      </div>
+      <div class="card-category">Agriculture / Food</div>
+      <div class="card-title">40% of Food is Lost Before It Reaches a Plate</div>
+      <div class="card-desc">Post-harvest losses cost $940B annually. Cold chain gaps, poor forecasting, and middlemen inefficiencies mean farmers lose income while consumers pay more.</div>
+      <div class="card-footer">
+        <span class="tag">AgriTech</span>
+        <span class="tag">IoT</span>
+        <span class="revenue-tag">$55B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="logistics" style="animation-delay:0.3s" onclick="openModal('p7')">
+      <div class="card-top">
+        <span class="card-number">007</span>
+        <span class="severity-badge severity-high">High</span>
+      </div>
+      <div class="card-category">Logistics / Supply Chain</div>
+      <div class="card-title">Last-Mile Delivery in Dense Urban Slums</div>
+      <div class="card-desc">30% of global urban population lives in informal settlements with no addresses. E-commerce and emergency services can't navigate them, creating a delivery dead zone for 1B+ people.</div>
+      <div class="card-footer">
+        <span class="tag">Mapping</span>
+        <span class="tag">Drone</span>
+        <span class="revenue-tag">$20B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="housing" style="animation-delay:0.35s" onclick="openModal('p8')">
+      <div class="card-top">
+        <span class="card-number">008</span>
+        <span class="severity-badge severity-high">High</span>
+      </div>
+      <div class="card-category">Housing / Real Estate</div>
+      <div class="card-title">Home Ownership is Out of Reach for Millennials</div>
+      <div class="card-desc">Home prices have risen 3x faster than wages since 2000. First-time buyers can't save for down payments while renting, creating a permanent renter class and generational wealth gap.</div>
+      <div class="card-footer">
+        <span class="tag">PropTech</span>
+        <span class="tag">Fractional</span>
+        <span class="revenue-tag">$100B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="hr" style="animation-delay:0.4s" onclick="openModal('p9')">
+      <div class="card-top">
+        <span class="card-number">009</span>
+        <span class="severity-badge severity-medium">Medium</span>
+      </div>
+      <div class="card-category">HR & Future of Work</div>
+      <div class="card-title">Burnout is Invisible Until It's Too Late</div>
+      <div class="card-desc">Employee burnout costs $322B globally in lost productivity. Most companies have no early warning system — they only discover burnout when people quit or collapse.</div>
+      <div class="card-footer">
+        <span class="tag">HR Tech</span>
+        <span class="tag">B2B SaaS</span>
+        <span class="revenue-tag">$8B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="food" style="animation-delay:0.45s" onclick="openModal('p10')">
+      <div class="card-top">
+        <span class="card-number">010</span>
+        <span class="severity-badge severity-high">High</span>
+      </div>
+      <div class="card-category">Food & Nutrition</div>
+      <div class="card-title">Ultra-Processed Food is Dominating the Poor</div>
+      <div class="card-desc">Healthy food is 3x more expensive than junk food per calorie. Low-income communities have no access to affordable nutrition, driving a chronic disease epidemic that hits the young hard.</div>
+      <div class="card-footer">
+        <span class="tag">FoodTech</span>
+        <span class="tag">D2C</span>
+        <span class="revenue-tag">$15B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="climate" style="animation-delay:0.5s" onclick="openModal('p11')">
+      <div class="card-top">
+        <span class="card-number">011</span>
+        <span class="severity-badge severity-high">High</span>
+      </div>
+      <div class="card-category">Climate / Water</div>
+      <div class="card-title">2B People Lack Access to Safe Drinking Water</div>
+      <div class="card-desc">Water-borne diseases kill 485,000 people annually. Existing solutions are too expensive or require unreliable grid power. Decentralized purification models remain largely unscaled.</div>
+      <div class="card-footer">
+        <span class="tag">HardTech</span>
+        <span class="tag">Impact</span>
+        <span class="revenue-tag">$32B TAM →</span>
+      </div>
+    </div>
+
+    <div class="problem-card" data-category="hr" style="animation-delay:0.55s" onclick="openModal('p12')">
+      <div class="card-top">
+        <span class="card-number">012</span>
+        <span class="severity-badge severity-medium">Medium</span>
+      </div>
+      <div class="card-category">HR / Gig Economy</div>
+      <div class="card-title">Gig Workers Have Zero Safety Net</div>
+      <div class="card-desc">500M gig workers worldwide have no health insurance, no pension, and no sick pay. Platforms profit from flexibility but pass all risk to individuals with no alternative protection layer.</div>
+      <div class="card-footer">
+        <span class="tag">InsurTech</span>
+        <span class="tag">B2B2C</span>
+        <span class="revenue-tag">$18B TAM →</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>ProblemMine — Mapping the world's friction into opportunity.</p>
+  <p>Built for founders who think in <span>first principles</span>.</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnBg(event)">
+  <div class="modal" id="modal-content">
+    <!-- filled by JS -->
   </div>
 </div>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="reveal">
-    <div class="section-label">Aare Kaun Che Amara?</div>
-    <h2 class="section-title">WE'RE NOT JUST <span class="red">FOOD</span> —<br>WE'RE A FEELING.</h2>
-    <p class="section-desc">Madhav Food Mall started with one idea: desi khana should be no-nonsense, no-compromise, and absolutely slappin'. From the first cup of chai to the last bite of dal baati — it's all made with jugaad, passion, and lots of ghee.</p>
-  </div>
-  <div class="about-grid reveal">
-    <div class="about-img-wrap">
-      <div class="about-img-box">🍵</div>
-      <div class="about-float-card">
-        <div class="num">4.9★</div>
-        <div class="lbl">Customer Rating</div>
-      </div>
-    </div>
-    <div>
-      <p style="color:var(--muted); font-family:'Baloo 2',sans-serif; font-size:1rem; line-height:1.8; margin-bottom:20px;">
-        Madhav Food Mall is a Gujarati food business that mixes the best of <strong style="color:var(--yell)">Kathiyawadi & Punjabi</strong> cuisine with a street-smart franchise model. We believe food is community — so we built a brand that any hustler can own.
-      </p>
-      <p style="color:var(--muted); font-family:'Baloo 2',sans-serif; font-size:1rem; line-height:1.8; margin-bottom:28px;">
-        Our chai isn't just a drink — it's a ritual. Our khana isn't just food — it's ghar jaisi feeling. Whether you're grabbing a quick cutting chai or sitting down for a full thali, <strong style="color:var(--red)">Madhav hits different.</strong>
-      </p>
-      <div class="about-pills">
-        <span class="pill">☕ Kadak Chai</span>
-        <span class="pill">🍛 Kathiyawadi</span>
-        <span class="pill">🌶️ Punjabi</span>
-        <span class="pill">🥤 Beverages</span>
-        <span class="pill">🏪 Franchise Ready</span>
-        <span class="pill">💯 100% Desi</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MENU VIBES -->
-<section id="menu">
-  <div class="reveal">
-    <div class="section-label">Kya Serve Karte Hain?</div>
-    <h2 class="section-title">THE MENU <span class="red">HITS</span><br>EVERY TIME.</h2>
-    <p class="section-desc">Chai ho ya thali — everything is made fresh, served hot, and priced for real people. No cap.</p>
-  </div>
-  <div class="menu-grid reveal">
-    <div class="menu-card">
-      <div class="menu-icon">☕</div>
-      <h3>Kadak Chai & Beverages</h3>
-      <p>Cutting chai, masala chai, adrak wali chai, cold coffee, lassi, masala soda — beverage game too strong fr.</p>
-      <span class="menu-tag">⭐ Most Popular</span>
-    </div>
-    <div class="menu-card">
-      <div class="menu-icon">🍛</div>
-      <h3>Kathiyawadi Thali</h3>
-      <p>Dal baati churma, sev tameta, rotla, khichdi kadhi — sab kuch jo ghar yaad dilaye. Pure comfort food energy.</p>
-      <span class="menu-tag">🌟 Bestseller</span>
-    </div>
-    <div class="menu-card">
-      <div class="menu-icon">🌶️</div>
-      <h3>Punjabi Flavours</h3>
-      <p>Chole bhature, rajma rice, dal makhni, tandoori roti — North Indian vibes in a Gujarati setup. No way it's not bussin.</p>
-      <span class="menu-tag">🔥 Fan Fav</span>
-    </div>
-    <div class="menu-card">
-      <div class="menu-icon">🥤</div>
-      <h3>Street Snacks</h3>
-      <p>Dabeli, pav bhaji, vada pav, chaat station — Gujju street food done fresh every single day. Ekdum hit!</p>
-      <span class="menu-tag">🕐 Quick Bites</span>
-    </div>
-    <div class="menu-card">
-      <div class="menu-icon">🍰</div>
-      <h3>Meetha Section</h3>
-      <p>Mohanthal, halwa, gulab jamun, shrikhand — because every meal deserves a sweet full stop. Period.</p>
-      <span class="menu-tag">🍬 Sweet Hits</span>
-    </div>
-    <div class="menu-card">
-      <div class="menu-icon">🎉</div>
-      <h3>Bulk & Events</h3>
-      <p>Catering for functions, office lunches, parties, mandaps — we bring the full kitchen wherever you need it.</p>
-      <span class="menu-tag">📦 Order Now</span>
-    </div>
-  </div>
-</section>
-
-<!-- FRANCHISE -->
-<section id="franchise">
-  <div class="franchise-header reveal">
-    <div>
-      <div class="section-label">Bano Madhav Partner</div>
-      <h2 class="section-title">OWN YOUR <span class="red">STALL.</span><br>OWN YOUR FUTURE.</h2>
-      <p class="section-desc">Teen options — chai cart se lekar full shop tak. Apne budget mein apna business. Let's get this bread (and chai) 🍞☕</p>
-    </div>
-  </div>
-
-  <div class="pricing-grid reveal">
-
-    <!-- Starter -->
-    <div class="price-card">
-      <span class="price-emoji">🛺</span>
-      <div class="price-plan">Chai Cart</div>
-      <div class="price-amount">₹<span> </span>75K</div>
-      <div class="price-note">One-time setup investment</div>
-      <ul class="price-features">
-        <li>Branded chai cart + setup</li>
-        <li>Full menu training (3 days)</li>
-        <li>Starter raw material kit</li>
-        <li>Branding & signage</li>
-        <li>WhatsApp support</li>
-        <li>1 operator (you or hire)</li>
-      </ul>
-      <a href="#contact" class="btn-primary" style="display:block; text-align:center;">Apply Karo</a>
-    </div>
-
-    <!-- Popular -->
-    <div class="price-card popular">
-      <div class="popular-badge">🔥 Most Picked</div>
-      <span class="price-emoji">🏪</span>
-      <div class="price-plan">Mini Stall</div>
-      <div class="price-amount">₹<span> </span>2.5L</div>
-      <div class="price-note">Setup + first month supplies</div>
-      <ul class="price-features">
-        <li>Fully fitted stall (150–300 sqft)</li>
-        <li>Kitchen equipment included</li>
-        <li>7-day on-site training</li>
-        <li>Full Madhav branding kit</li>
-        <li>Social media starter pack</li>
-        <li>Monthly supply chain access</li>
-        <li>Priority partner support</li>
-      </ul>
-      <a href="#contact" class="btn-primary" style="display:block; text-align:center;">Apply Karo</a>
-    </div>
-
-    <!-- Premium -->
-    <div class="price-card">
-      <span class="price-emoji">🏬</span>
-      <div class="price-plan">Full Shop</div>
-      <div class="price-amount">₹<span> </span>6L+</div>
-      <div class="price-note">Customised as per location</div>
-      <ul class="price-features">
-        <li>Full restaurant setup (400+ sqft)</li>
-        <li>Dine-in + takeaway ready</li>
-        <li>Staff recruitment support</li>
-        <li>15-day comprehensive training</li>
-        <li>POS system + billing software</li>
-        <li>Digital marketing support</li>
-        <li>Dedicated area manager</li>
-        <li>Quarterly business review</li>
-      </ul>
-      <a href="#contact" class="btn-primary" style="display:block; text-align:center;">Apply Karo</a>
-    </div>
-
-  </div>
-
-  <!-- Requirements -->
-  <div class="reveal" style="margin-top: 70px;">
-    <div class="section-label">Kya Chahiye Partner Banne Ke Liye?</div>
-    <h3 style="font-family:'Bebas Neue',sans-serif; font-size:2.2rem; margin-bottom: 8px;">FRANCHISE <span style="color:var(--red)">REQUIREMENTS</span></h3>
-    <p class="section-desc">Simple standards. Big returns. Amara partner banna easy che — bas in basic cheezon ka dhyan rakho.</p>
-    <div class="req-grid">
-      <div class="req-card">
-        <h4>📍 Location</h4>
-        <p>High footfall area — near school, market, hospital, station, or highway. Minimum 80 sqft for cart setup.</p>
-      </div>
-      <div class="req-card">
-        <h4>💰 Investment Ready</h4>
-        <p>Initial capital as per selected plan. 30% must be self-funded. Loan assistance available on request.</p>
-      </div>
-      <div class="req-card">
-        <h4>🎯 Brand Standards</h4>
-        <p>Only Madhav-approved menu, pricing, packaging & uniforms. No modifications without HQ approval.</p>
-      </div>
-      <div class="req-card">
-        <h4>📋 Legal & Hygiene</h4>
-        <p>FSSAI license mandatory. Clean, hygienic setup as per Madhav standards. Regular audits done.</p>
-      </div>
-      <div class="req-card">
-        <h4>👤 Operator Presence</h4>
-        <p>Owner or trained manager must be on-site daily. Cannot be run fully by unskilled staff.</p>
-      </div>
-      <div class="req-card">
-        <h4>📱 Reporting</h4>
-        <p>Weekly sales report via WhatsApp. Monthly targets set. Support team always available 9am–9pm.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="reveal">
-    <div class="section-label">Baat Karo Hamse</div>
-    <h2 class="section-title">READY TO <span class="red">ROLL?</span><br>HIT US UP.</h2>
-    <p class="section-desc">Franchise inquiry ho, bulk order ho, ya sirf chai peeni ho — sab ke liye ek hi jagah. Drop a message!</p>
-  </div>
-
-  <div class="contact-grid reveal">
-    <div>
-      <div class="contact-info-item">
-        <div class="contact-icon">📍</div>
-        <div>
-          <h4>Headquarters</h4>
-          <p>Madhav Food Mall HQ<br>Ahmedabad, Gujarat, India</p>
-        </div>
-      </div>
-      <div class="contact-info-item">
-        <div class="contact-icon">📞</div>
-        <div>
-          <h4>Call / WhatsApp</h4>
-          <p>+91 98765 43210<br>Mon – Sat, 9am to 8pm</p>
-        </div>
-      </div>
-      <div class="contact-info-item">
-        <div class="contact-icon">📧</div>
-        <div>
-          <h4>Email</h4>
-          <p>franchise@madhavfoodmall.com<br>We reply within 24 hours!</p>
-        </div>
-      </div>
-      <div class="contact-info-item">
-        <div class="contact-icon">📱</div>
-        <div>
-          <h4>Social Media</h4>
-          <p>@MadhavFoodMall on Instagram<br>Daily vibes + food reels 🔥</p>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="contact-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" placeholder="Aapka naam" id="fname" />
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="tel" placeholder="+91 XXXXX XXXXX" id="fphone" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="aap@email.com" id="femail" />
-        </div>
-        <div class="form-group">
-          <label>Interested In</label>
-          <select id="finterest">
-            <option value="">-- Select karo --</option>
-            <option>Chai Cart (₹75K)</option>
-            <option>Mini Stall (₹2.5L)</option>
-            <option>Full Shop (₹6L+)</option>
-            <option>Bulk / Catering Order</option>
-            <option>General Inquiry</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Your City / Location</label>
-          <input type="text" placeholder="Tame kyathi cho? (Your city)" id="fcity" />
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea placeholder="Batao kya socha hai tumne... no judgement! 😄" id="fmsg"></textarea>
-        </div>
-        <button class="form-submit" onclick="submitForm()">🚀 Send Karo — Let's Talk!</button>
-        <div class="success-msg" id="successMsg">
-          ✅ Message mila! Our team will WhatsApp you within 24 hours. Chai ready rakhna! ☕
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <span class="logo">MADHAV <span>FOOD</span> MALL</span>
-      <p>Gujarat ka apna desi food brand — chai se shuru, franchise tak. Real food, real people, real hustle. 🔥</p>
-    </div>
-    <div class="footer-col">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#menu">Our Menu</a></li>
-        <li><a href="#franchise">Franchise</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Franchise Plans</h4>
-      <ul>
-        <li><a href="#franchise">🛺 Chai Cart – ₹75K</a></li>
-        <li><a href="#franchise">🏪 Mini Stall – ₹2.5L</a></li>
-        <li><a href="#franchise">🏬 Full Shop – ₹6L+</a></li>
-        <li><a href="#contact">Apply Now</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2024 Madhav Food Mall. All rights reserved. Made with ☕ & ❤️ in Gujarat.</p>
-    <p style="color:var(--yell)">FSSAI Licensed · Franchise Enquiries Welcome</p>
-  </div>
-</footer>
-
 <script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
+  const problems = {
+    p1: {
+      number: '001',
+      category: 'Healthcare / Diagnostics',
+      title: 'Delayed Medical Diagnosis in Tier-2 & Rural Areas',
+      severity: 'Critical',
+      severityClass: 'severity-critical',
+      description: 'Over 600 million people in India and billions worldwide lack access to specialist doctors. Patients in rural and semi-urban areas wait weeks — sometimes months — for diagnoses that could be delivered in hours with the right infrastructure. Misdiagnosis rates exceed 40% in understaffed clinics, and preventable deaths from late detection of cancer, TB, and heart disease run into the millions annually.',
+      marketSize: '$45B',
+      peopleAffected: '800M+',
+      urgency: '9/10',
+      startupIdeas: [
+        { title: 'AI Diagnostics as a Service for Clinics', desc: 'A B2B SaaS platform that plugs AI diagnostic tools (radiology reads, pathology, ECG analysis) into existing rural clinics for a monthly subscription. Revenue: ₹5,000–₹50,000/clinic/month.', color: '' },
+        { title: 'Spoke-and-Hub Telemedicine Network', desc: 'Physical micro-clinics in villages (staffed by trained paramedics) connected to city specialists via video. The tech handles scheduling, records, and follow-ups. Revenue: consultation fees + clinic franchise model.', color: 'alt' },
+        { title: 'Diagnostic-at-Home Subscription', desc: 'Mobile phlebotomists + portable diagnostics that visit homes on subscription. Test results analyzed by AI, flagged to a doctor. Revenue: Monthly plans at ₹299–₹999.', color: 'alt2' }
+      ],
+      tags: ['AI/ML', 'Telemedicine', 'B2C', 'B2B2C', 'Hardware']
+    },
+    p2: {
+      number: '002',
+      category: 'Mental Health',
+      title: 'Therapist Shortage & Unaffordable Mental Care',
+      severity: 'Critical',
+      severityClass: 'severity-critical',
+      description: 'There is a massive and widening gap between the demand for mental health care and its supply. In low-and-middle income countries, there are fewer than 0.07 psychiatrists per 10,000 people. In India, there are ~9,000 psychiatrists for 1.4 billion people. Private therapy costs $80–200 per hour in developed nations — making it a luxury. Stigma, lack of awareness, and cost together ensure most people suffer in silence.',
+      marketSize: '$12B',
+      peopleAffected: '1B+',
+      urgency: '9/10',
+      startupIdeas: [
+        { title: 'AI-First Therapy Companion App', desc: 'An evidence-based CBT app powered by AI that provides structured daily check-ins, mood tracking, and crisis escalation. Freemium → premium at $10/month. Not a replacement for therapy — a stepping stone.', color: '' },
+        { title: 'Corporate Mental Health as a Benefit', desc: 'Sell mental health access (unlimited text therapy + 4 video sessions/month) as an employee benefit to companies. Revenue: $15–30 per employee per month. Target HR departments.', color: 'alt' },
+        { title: 'Community Mental Health Peer Network', desc: 'Train and certify community mental health facilitators in neighborhoods. App connects people to facilitators for structured peer support. Revenue: subscription + insurance reimbursement.', color: 'alt2' }
+      ],
+      tags: ['Mental Health', 'AI', 'B2B SaaS', 'Consumer App']
+    },
+    p3: {
+      number: '003',
+      category: 'Climate / Energy',
+      title: 'SMEs Can\'t Afford the Green Transition',
+      severity: 'Critical',
+      severityClass: 'severity-critical',
+      description: 'Small and medium enterprises produce over 70% of industrial carbon in developing markets but are locked out of the green transition due to high upfront capital costs, complex regulations, and lack of expertise. A garment factory owner in Surat knows solar saves money long-term but can\'t fund the installation. Sustainability consultants charge ₹5–10 lakh for a report. The gap between intention and action is almost entirely financial and informational.',
+      marketSize: '$28B',
+      peopleAffected: '400M businesses',
+      urgency: '8/10',
+      startupIdeas: [
+        { title: 'Green Loan Marketplace for SMEs', desc: 'A fintech platform that aggregates green loans from banks/NBFCs and matches them to SMEs based on their energy audit data. Revenue: origination fees (1-2% per loan) + SaaS for lenders.', color: '' },
+        { title: 'Energy-as-a-Service for Factories', desc: 'Install solar/energy efficiency systems at zero upfront cost; charge a monthly "energy subscription" that is cheaper than current bills. Own the hardware, collect recurring revenue.', color: 'alt' },
+        { title: 'Carbon Accounting SaaS for MSMEs', desc: 'Simple, WhatsApp-native carbon footprint tracking that helps MSMEs generate ESG reports for export buyers (EU Carbon Border Tax compliance). Revenue: ₹2,000–₹15,000/month.', color: 'alt2' }
+      ],
+      tags: ['CleanTech', 'Fintech', 'B2B', 'SaaS', 'Hardware']
+    },
+    p4: {
+      number: '004',
+      category: 'Education / Skills',
+      title: 'The Skills-to-Jobs Mismatch Crisis',
+      severity: 'High',
+      severityClass: 'severity-high',
+      description: 'The World Economic Forum estimates 85 million jobs could go unfilled by 2025 due to a talent mismatch, while 375 million workers globally may need to switch occupational categories due to automation. University degrees cost more than ever but signal less to employers. Students graduate without the practical skills companies need; companies can\'t find qualified workers. The middle layer — practical, job-ready skill training — is broken.',
+      marketSize: '$60B',
+      peopleAffected: '375M workers',
+      urgency: '8/10',
+      startupIdeas: [
+        { title: 'Income Share Agreement Bootcamp', desc: 'Intensive 3–6 month skills programs in high-demand fields (data, product, sales) with zero upfront cost. Students pay 10–15% of income for 2 years after getting a job. Aligns incentives perfectly.', color: '' },
+        { title: 'B2B Talent Pipeline Platform', desc: 'Partner with companies to define exact skill requirements, train candidates to those specs, and deliver job-ready hires. Companies pay a placement fee. Students get free training.', color: 'alt' },
+        { title: 'Micro-Credentials Marketplace', desc: 'A platform where companies post "skill bounties" — certify these 5 skills and get an interview. Course providers deliver the training. Platform takes 20% of each course sold through a bounty.', color: 'alt2' }
+      ],
+      tags: ['EdTech', 'B2B', 'B2C', 'Marketplace']
+    },
+    p5: {
+      number: '005',
+      category: 'Fintech / Credit',
+      title: '1.4B Adults Are Completely Unbanked',
+      severity: 'High',
+      severityClass: 'severity-high',
+      description: 'According to the World Bank, 1.4 billion adults globally remain completely unbanked — no account, no card, no credit history. This includes informal sector workers, migrants, rural farmers, and women in developing economies. Without financial identity, they can\'t access formal credit, save safely, or build wealth. They pay 3–10x more for financial services through informal moneylenders and remittance agencies.',
+      marketSize: '$380B',
+      peopleAffected: '1.4B adults',
+      urgency: '9/10',
+      startupIdeas: [
+        { title: 'Alternative Credit Scoring Engine', desc: 'Use non-traditional data — utility payments, rent, mobile data usage, purchase patterns — to build credit scores for the thin-file population. License the API to NBFCs and banks. Revenue: API calls + lending partnerships.', color: '' },
+        { title: 'Community Savings & Lending Circles (Digital Chit)', desc: 'Digitize the traditional chit fund / rotating savings model with escrow, automation, and credit-building. Charge 2% of the pot as a platform fee. Proven trust-based model at scale.', color: 'alt' },
+        { title: 'Merchant Finance for Informal Retailers', desc: 'Give kirana stores / informal merchants a digital payments terminal; use their transaction history to offer working capital loans in 24 hours. Revenue: interest spread + transaction fees.', color: 'alt2' }
+      ],
+      tags: ['Fintech', 'Lending', 'Payments', 'DeFi', 'B2B2C']
+    },
+    p6: {
+      number: '006',
+      category: 'Agriculture / Food',
+      title: '40% of Food is Lost Before It Reaches a Plate',
+      severity: 'Critical',
+      severityClass: 'severity-critical',
+      description: 'Post-harvest losses cost $940 billion annually and affect over 1.3 billion tonnes of food every year. In India alone, $13B worth of fruits and vegetables rot due to inadequate cold storage, poor roads, and lack of market information. Farmers receive only 15–20 cents of every consumer rupee. The rest goes to middlemen and spoilage.',
+      marketSize: '$55B',
+      peopleAffected: '500M farmers',
+      urgency: '9/10',
+      startupIdeas: [
+        { title: 'Farm-to-Retailer Direct Marketplace', desc: 'A B2B platform connecting farmers directly to supermarkets, restaurants, and dark stores — eliminating 2–3 layers of middlemen. Revenue: 5–8% commission per transaction. Think Jumbotail + cold chain.', color: '' },
+        { title: 'Cold Chain as a Service (CCaaS)', desc: 'Deploy solar-powered micro cold storage units at village aggregation points, rented to farmers per day/week. Subsidized by carbon credits. Revenue: storage rental + logistics margin.', color: 'alt' },
+        { title: 'AI Demand Forecasting for Agri Supply Chain', desc: 'Predict which crops will be oversupplied and redirect them to processing or new markets before they spoil. Sell forecasting SaaS to large agri traders and food companies.', color: 'alt2' }
+      ],
+      tags: ['AgriTech', 'Logistics', 'IoT', 'Marketplace', 'B2B']
+    },
+    p7: {
+      number: '007',
+      category: 'Logistics / Supply Chain',
+      title: 'Last-Mile Delivery in Dense Urban Slums',
+      severity: 'High',
+      severityClass: 'severity-high',
+      description: 'Over 1 billion people live in informal urban settlements — areas with no formal addresses, no street naming, and no standard navigation data. India alone has 13,000 slums. Delivery companies, ambulances, and government services cannot reach these areas efficiently. Packages get lost, emergency services arrive late, and e-commerce remains inaccessible to these communities.',
+      marketSize: '$20B',
+      peopleAffected: '1B+',
+      urgency: '7/10',
+      startupIdeas: [
+        { title: 'Digital Address Infrastructure', desc: 'Crowdsource geo-tagged digital addresses for informal settlements using resident smartphones. License the addressing API to logistics companies, government, and e-commerce. Revenue: API access fees.', color: '' },
+        { title: 'Slum-Native Delivery Network', desc: 'Hire and train local residents as last-mile delivery agents who know the area. Operate community pick-up lockers at central points. Revenue: delivery fee sharing + locker rental to e-commerce firms.', color: 'alt' },
+        { title: 'Drone Delivery for Medical Supplies', desc: 'Deploy small drones for urgent, lightweight deliveries — medicines, test samples, blood — in areas unreachable by road. Revenue: per-delivery fee from hospitals, NGOs, pharma.', color: 'alt2' }
+      ],
+      tags: ['Logistics', 'Mapping', 'Drone', 'B2B', 'Impact']
+    },
+    p8: {
+      number: '008',
+      category: 'Housing / Real Estate',
+      title: 'Home Ownership is Out of Reach for Millennials',
+      severity: 'High',
+      severityClass: 'severity-high',
+      description: 'In most major cities globally, home prices have risen 3x faster than wages since 2000. In Mumbai, the average home costs 17x the average annual salary. In London, 30x. Millennials and Gen Z are stuck in a rent trap — paying 40–50% of income on rent, unable to save a down payment, and priced out of the wealth-building that real estate provides.',
+      marketSize: '$100B',
+      peopleAffected: '1.8B millennials',
+      urgency: '7/10',
+      startupIdeas: [
+        { title: 'Fractional Home Ownership Platform', desc: 'Let people buy 1–10% of a home, build equity while renting it, and gradually buy out other fractional owners. Revenue: transaction fees + management fees on property.', color: '' },
+        { title: 'Rent-to-Own with Flexible Tenure', desc: 'Structure rental agreements where a % of rent converts to equity over time. Work with developers to offer this on new inventory. Revenue: spread on financing + origination.', color: 'alt' },
+        { title: 'Co-living Network for Young Professionals', desc: 'Premium co-living spaces (private rooms, shared amenities) at 30–40% below individual apartment costs. Build community, include utilities/internet. Revenue: membership fees at scale.', color: 'alt2' }
+      ],
+      tags: ['PropTech', 'Fintech', 'B2C', 'Fractional', 'Real Estate']
+    },
+    p9: {
+      number: '009',
+      category: 'HR & Future of Work',
+      title: 'Burnout is Invisible Until It\'s Too Late',
+      severity: 'Medium',
+      severityClass: 'severity-medium',
+      description: 'Employee burnout costs the global economy $322B annually in absenteeism and lost productivity. According to Gallup, 76% of employees experience burnout on the job at least sometimes. Most companies have no early warning systems — managers only notice burnout when performance collapses or the employee quits. By then, the cost of replacement (1.5–2x salary) is already locked in.',
+      marketSize: '$8B',
+      peopleAffected: '1B+ workers',
+      urgency: '6/10',
+      startupIdeas: [
+        { title: 'Passive Burnout Detection SaaS', desc: 'Analyze anonymized signals — meeting load, after-hours work patterns, response time changes, calendar density — to give managers a team wellbeing score. Revenue: $10–25 per employee per month, sold to HR.', color: '' },
+        { title: 'Manager Training Platform', desc: 'Bite-sized, asynchronous training for middle managers on mental health, workload management, and burnout prevention. Position as mandatory compliance training. Revenue: per-seat SaaS.', color: 'alt' },
+        { title: 'Employee Wellbeing Benefits Bundle', desc: 'Package mental health, fitness, nutrition, and financial wellness into one employee benefit subscription. White-label for HR and insurance. Revenue: PMPM (per member per month).', color: 'alt2' }
+      ],
+      tags: ['HR Tech', 'B2B SaaS', 'Mental Health', 'Analytics']
+    },
+    p10: {
+      number: '010',
+      category: 'Food & Nutrition',
+      title: 'Ultra-Processed Food is Dominating the Poor',
+      severity: 'High',
+      severityClass: 'severity-high',
+      description: 'Healthy food costs 3x more per calorie than ultra-processed junk food. In urban low-income areas, "food deserts" — zones with no access to fresh produce — are the norm. The result is a dual burden: malnutrition and obesity coexisting in the same neighborhoods. Diabetes, hypertension, and heart disease are exploding among the urban poor, not the rich.',
+      marketSize: '$15B',
+      peopleAffected: '3B+ people',
+      urgency: '8/10',
+      startupIdeas: [
+        { title: 'Affordable Nutrition Brand (D2C)', desc: 'Build a brand of nutritionally dense, affordable staple foods (fortified atta, protein-rich snacks) priced at or below junk food. Distribute through kirana stores. Revenue: product margins at scale.', color: '' },
+        { title: 'Community Kitchen Network', desc: 'Dark kitchen model but for healthy, freshly cooked affordable meals ($1–1.5) delivered via tiffin to offices and residences in dense urban areas. Revenue: subscription meal plans.', color: 'alt' },
+        { title: 'School Nutrition SaaS for Mid-Day Meals', desc: 'Help governments and NGOs plan, procure, and monitor school meal programs using technology. Reduce leakage, improve nutritional quality. Revenue: government contracts + SaaS licensing.', color: 'alt2' }
+      ],
+      tags: ['FoodTech', 'D2C', 'Impact', 'B2G', 'Consumer']
+    },
+    p11: {
+      number: '011',
+      category: 'Climate / Water',
+      title: '2B People Lack Access to Safe Drinking Water',
+      severity: 'High',
+      severityClass: 'severity-high',
+      description: '2 billion people worldwide lack access to safely managed drinking water. In rural India, Sub-Saharan Africa, and South-East Asia, communities rely on contaminated groundwater, rivers, or expensive tanker deliveries. Water-borne diseases kill 485,000 people annually — mostly children under 5. The market failure is real: people will pay for clean water, but distribution and purification infrastructure doesn\'t reach them.',
+      marketSize: '$32B',
+      peopleAffected: '2B people',
+      urgency: '9/10',
+      startupIdeas: [
+        { title: 'Community Water ATM Network', desc: 'Deploy solar-powered water purification kiosks in villages and urban slums. Users pay per liter via mobile wallet. Revenue: water sales at ₹2–5/liter vs tanker prices of ₹15–30/liter.', color: '' },
+        { title: 'Smart Water Monitoring for Municipalities', desc: 'IoT sensors + AI platform for city water utilities to detect leaks, contamination, and theft in real-time. Revenue: SaaS subscription + hardware sales to government.', color: 'alt' },
+        { title: 'Portable Water Purifier Subscription', desc: 'Low-cost purifier device (manufactured at scale) offered on a $3–5/month subscription including filter replacements. Finance upfront cost through microfinance partners.', color: 'alt2' }
+      ],
+      tags: ['CleanTech', 'HardTech', 'Impact', 'IoT', 'B2G']
+    },
+    p12: {
+      number: '012',
+      category: 'HR / Gig Economy',
+      title: 'Gig Workers Have Zero Safety Net',
+      severity: 'Medium',
+      severityClass: 'severity-medium',
+      description: '500 million gig workers globally have no employer-sponsored health insurance, no pension plan, no sick pay, and no unemployment protection. Platforms like Uber, Swiggy, and Upwork classify them as "independent contractors" to avoid providing benefits. When a delivery rider breaks a leg, they lose their income and face medical bankruptcy. The protection layer that full-time employment provides simply does not exist for them.',
+      marketSize: '$18B',
+      peopleAffected: '500M workers',
+      urgency: '7/10',
+      startupIdeas: [
+        { title: 'Portable Benefits Wallet for Gig Workers', desc: 'A digital wallet where multiple platforms contribute micro-amounts per task completed. Workers accumulate health, accident, and pension credits portable across platforms. Revenue: float on wallet balances + fee per platform.', color: '' },
+        { title: 'Gig Worker Group Insurance at Scale', desc: 'Aggregate millions of gig workers into one risk pool to negotiate cheap group insurance rates. Offer via WhatsApp. Revenue: 15–20% commission on premiums.', color: 'alt' },
+        { title: 'Earned Wage Access for Platform Workers', desc: 'Let gig workers access their earned income daily instead of weekly/monthly. Charge a flat ₹10–20 per withdrawal. Prevents predatory short-term loans. Revenue: withdrawal fees × volume.', color: 'alt2' }
+      ],
+      tags: ['InsurTech', 'Fintech', 'B2B2C', 'Gig Economy', 'Impact']
+    }
+  };
+
+  function openModal(id) {
+    const p = problems[id];
+    if (!p) return;
+    const modal = document.getElementById('modal-content');
+    modal.innerHTML = `
+      <div class="modal-header">
+        <div>
+          <div class="modal-cat">${p.number} — ${p.category}</div>
+          <div class="modal-title">${p.title}</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-label">// The Problem</div>
+          <p>${p.description}</p>
+        </div>
+        <div class="modal-section">
+          <div class="metrics-row">
+            <div class="metric-box">
+              <span class="metric-value">${p.marketSize}</span>
+              <span class="metric-label">Market Size</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-value">${p.peopleAffected}</span>
+              <span class="metric-label">Affected</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-value">${p.urgency}</span>
+              <span class="metric-label">Urgency</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-label">// Startup Ideas to Solve It</div>
+          <div class="startup-ideas">
+            ${p.startupIdeas.map(idea => `
+              <div class="startup-idea ${idea.color}">
+                <h4>${idea.title}</h4>
+                <p>${idea.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-label">// Relevant Domains</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            ${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOnBg(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function filterCards(category, btn) {
+    document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.problem-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const cat = card.dataset.category;
+      if (category === 'all' || cat === category) {
+        card.classList.remove('hidden');
+        visible++;
+      } else {
+        card.classList.add('hidden');
       }
     });
-  }, { threshold: 0.12 });
-  reveals.forEach(r => observer.observe(r));
-
-  // Form submit
-  function submitForm() {
-    const name = document.getElementById('fname').value.trim();
-    const phone = document.getElementById('fphone').value.trim();
-    const email = document.getElementById('femail').value.trim();
-    if (!name || !phone || !email) {
-      alert('Bhai, naam, phone aur email toh bharo! 😅');
-      return;
-    }
-    document.getElementById('successMsg').style.display = 'block';
-    ['fname','fphone','femail','finterest','fcity','fmsg'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.value = '';
-    });
+    document.getElementById('visible-count').textContent = visible;
   }
+
+  // Stagger card animations on load
+  document.querySelectorAll('.problem-card').forEach((card, i) => {
+    card.style.animationDelay = `${i * 0.07}s`;
+  });
 </script>
 </body>
 </html>
